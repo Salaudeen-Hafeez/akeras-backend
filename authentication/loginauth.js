@@ -19,7 +19,7 @@ const verifyLogin = async (req, res, next) => {
     }
     next();
   } catch (error) {
-    res.status(400).send(error.message);
+    res.status(400).send(error);
   }
 };
 
