@@ -5,17 +5,17 @@ import { client } from '../database/db';
 const { verify } = jwt;
 const verifyLogin = async (req, res, next) => {
   const { error } = loginValidation(req.body);
-  if (error) {
-    res.json({ joiErr: error.details[0].message });
-  }
   const { email } = req.body;
   try {
+    if (error) {
+      throw Error(error.details[0].message);
+    }
     const userExist = await client.query(
       `SELECT EXISTS(SELECT 1 FROM users WHERE _email = $1)`,
       [email]
     );
     if (!userExist.rows[0].exists) {
-      res.status(404).json({ emailErr: `user with ${email} does not exist` });
+      throw Error(`user with ${email} does not exist`);
     }
     next();
   } catch (error) {
@@ -25,17 +25,17 @@ const verifyLogin = async (req, res, next) => {
 
 const verifyAdminLogin = async (req, res, next) => {
   const { error } = loginValidation(req.body);
-  if (error) {
-    res.json({ joiErr: error.details[0].message });
-  }
   const { email } = req.body;
   try {
+    if (error) {
+      throw Error(error.details[0].message);
+    }
     const adminExist = await client.query(
       `SELECT EXISTS(SELECT 1 FROM admins WHERE _email = $1)`,
       [email]
     );
     if (!adminExist.rows[0].exists) {
-      res.status(404).json({ emailErr: `admin with ${email} does not exist` });
+      throw Error(`admin with ${email} does not exist`);
     }
     next();
   } catch (error) {
