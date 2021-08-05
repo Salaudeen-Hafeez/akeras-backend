@@ -8,14 +8,14 @@ const verifyLogin = async (req, res, next) => {
   const { email } = req.body;
   try {
     if (error) {
-      throw Error(error.details[0].message);
+      throw new Error(error.details[0].message);
     }
     const userExist = await client.query(
       `SELECT EXISTS(SELECT 1 FROM users WHERE _email = $1)`,
       [email]
     );
     if (!userExist.rows[0].exists) {
-      throw Error(`user with ${email} does not exist`);
+      throw new Error(`user with ${email} does not exist`);
     }
     next();
   } catch (error) {
@@ -28,14 +28,14 @@ const verifyAdminLogin = async (req, res, next) => {
   const { email } = req.body;
   try {
     if (error) {
-      throw Error(error.details[0].message);
+      throw new Error(error.details[0].message);
     }
     const adminExist = await client.query(
       `SELECT EXISTS(SELECT 1 FROM admins WHERE _email = $1)`,
       [email]
     );
     if (!adminExist.rows[0].exists) {
-      throw Error(`admin with ${email} does not exist`);
+      throw new Error(`admin with ${email} does not exist`);
     }
     next();
   } catch (error) {
