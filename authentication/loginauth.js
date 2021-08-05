@@ -39,7 +39,7 @@ const verifyAdminLogin = async (req, res, next) => {
     }
     next();
   } catch (error) {
-    res.status(400).send(error.message);
+    next(error);
   }
 };
 
