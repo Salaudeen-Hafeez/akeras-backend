@@ -29,5 +29,9 @@ app.use((req, res) => {
   res.status(404).send('page not found');
 });
 
+app.use((err, req, res, next) => {
+  res.status(400).json({ message: err.message });
+});
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT);
