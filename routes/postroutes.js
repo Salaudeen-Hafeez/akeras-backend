@@ -104,7 +104,11 @@ postRouter.post(
   '/:username/:email/:token/packages',
   verifyToken,
   async (req, res) => {
-    const { error } = parcelValidation(req.body);
+    const reqBody = req.body;
+    if (reqBody.frajile === '') {
+      reqBody[frajile] = 'package not frajile';
+    }
+    const { error } = parcelValidation(reqBody);
     if (error) {
       res.status(404).json({ joiErr: error.details[0].message });
     } else {
