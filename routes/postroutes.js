@@ -105,6 +105,7 @@ postRouter.post(
   verifyToken,
   async (req, res) => {
     const reqBody = req.body;
+    res.json(reqBody);
     if (reqBody.frajile === '') {
       reqBody[frajile] = 'package not frajile';
     }
