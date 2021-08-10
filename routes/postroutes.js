@@ -106,7 +106,7 @@ postRouter.post(
   async (req, res) => {
     const reqBody = req.body;
     if (reqBody.frajile === '') {
-      reqBody[frajile] = 'package not frajile';
+      reqBody['frajile'] = 'package not frajile';
     }
     const { error } = parcelValidation(reqBody);
     if (error) {
