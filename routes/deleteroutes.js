@@ -20,7 +20,6 @@ deleteRouter.delete('/:email/packages/:parcelid', async (req, res) => {
   const parcelCon = [req.params.email, parcelid];
   try {
     const deletedParcel = deletePackage(parcelCon);
-    res.json(parcelCon);
     res.json(deletedParcel.rows[0]);
   } catch (error) {
     res.status(400).json({ message: error.message });
