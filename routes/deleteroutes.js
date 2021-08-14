@@ -11,7 +11,7 @@ deleteRouter.delete('/:email/:userid', async (req, res) => {
     const deletedUser = await deleteUser(userData);
     res.json(deletedUser.rows);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(400).json(error.message);
   }
 });
 
@@ -23,7 +23,7 @@ deleteRouter.delete('/:email/packages/:parcelid', async (req, res) => {
     res.json(parcelCon);
     res.json(deletedParcel.rows[0]);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(400).json(error.message);
   }
 });
 

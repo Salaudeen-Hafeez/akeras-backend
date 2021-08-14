@@ -27,7 +27,7 @@ updateRouter.put('/:email', async (req, res) => {
     }
     res.json(user.rows[0]);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(400).json(error.message);
   }
 });
 
@@ -49,7 +49,7 @@ updateRouter.put(
       }
       res.json(parcel.rows[0]);
     } catch (error) {
-      res.status(400).json({ message: error.message });
+      res.status(400).json(error.message);
     }
   }
 );
