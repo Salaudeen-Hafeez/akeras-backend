@@ -15,9 +15,9 @@ deleteRouter.delete('/:email/:userid', async (req, res) => {
   }
 });
 
-deleteRouter.delete('/:email/packages/:parcelid', async (req, res) => {
+deleteRouter.delete('/:username/packages/:parcelid', async (req, res) => {
   const parcelid = parseInt(req.params.parcelid);
-  const parcelCon = [req.params.email, parcelid];
+  const parcelCon = [req.params.username, parcelid];
   try {
     const deletedParcel = deletePackage(parcelCon);
     res.json(deletedParcel.rows[0]);
