@@ -35,7 +35,7 @@ postRouter.post('/login', verifyLogin, async (req, res, next) => {
     user.rows[0].auth_token = token;
     res.json(user.rows[0]);
   } catch (error) {
-    res.status(400).json(error.message);
+    res.status(400).json(error);
   }
 });
 
