@@ -26,8 +26,8 @@ updateRouter.put('/:email', async (req, res) => {
       user = await updateUser(key[3], data[3], con);
     }
     res.json(user.rows[0]);
-  } catch (err) {
-    res.send(err.message);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
   }
 });
 
@@ -48,8 +48,8 @@ updateRouter.put(
         parcel = await updatePackage(key[1], value[1], con);
       }
       res.json(parcel.rows[0]);
-    } catch (err) {
-      res.send(err.message);
+    } catch (error) {
+      res.status(400).json({ message: error.message });
     }
   }
 );

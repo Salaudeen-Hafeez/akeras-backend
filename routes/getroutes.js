@@ -9,8 +9,8 @@ getRouter.get('/:email/:token', verifyToken, async (req, res) => {
   try {
     const usersData = await client.query('SELECT * FROM users');
     res.json(usersData.rows);
-  } catch (err) {
-    res.send(err.message);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
   }
 });
 
@@ -19,8 +19,8 @@ getRouter.get('/:email/:token/packages', verifyToken, async (req, res) => {
   try {
     const packages = await client.query('SELECT * FROM packages');
     res.json(packages.rows);
-  } catch (err) {
-    res.send(err.message);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
   }
 });
 
@@ -36,8 +36,8 @@ getRouter.get(
         [condition]
       );
       res.json(packages.rows);
-    } catch (err) {
-      res.send(err.message);
+    } catch (error) {
+      res.status(400).json({ message: error.message });
     }
   }
 );
@@ -57,8 +57,8 @@ getRouter.get('/:userid/:email/:token', verifyToken, async (req, res) => {
       const user = await getUser(incomingUser);
       res.json(user.rows[0]);
     }
-  } catch (err) {
-    res.send(err.message);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
   }
 });
 
@@ -82,8 +82,8 @@ getRouter.get(
         );
         res.json(packages.rows);
       }
-    } catch (err) {
-      res.json(err.message);
+    } catch (error) {
+      res.status(400).json({ message: error.message });
     }
   }
 );
@@ -108,8 +108,8 @@ getRouter.get('/:email/packages/:packageid', async (req, res) => {
       );
       res.json(parcel.rows[0]);
     }
-  } catch (err) {
-    res.send(err.message);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
   }
 });
 

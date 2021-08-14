@@ -54,7 +54,7 @@ postRouter.post('/admins/login', verifyAdminLogin, async (req, res) => {
     admin.rows[0].admin_token = token;
     res.json(admin.rows[0]);
   } catch (error) {
-    res.status(400).json(error.message);
+    res.status(400).json({ message: error.message });
   }
 });
 
@@ -73,8 +73,8 @@ postRouter.post('/', async (req, res) => {
       userData[4] = 'active';
       const newUser = await postUser(userData);
       res.json(newUser.rows[0]);
-    } catch (err) {
-      res.json(err.message);
+    } catch (error) {
+      res.status(400).json({ message: error.message });
     }
   }
 });
@@ -93,8 +93,8 @@ postRouter.post('/admins', async (req, res) => {
       adminData[4] = 'active';
       const newAdmin = await postAdmin(adminData);
       res.json(newAdmin.rows[0]);
-    } catch (err) {
-      res.json(err.message);
+    } catch (error) {
+      res.status(400).json({ message: error.message });
     }
   }
 });
@@ -117,8 +117,8 @@ postRouter.post(
         packageData.push('At the location');
         const newPackage = await postPackage(packageData);
         res.json(newPackage.rows[0]);
-      } catch (err) {
-        res.json(err.message);
+      } catch (error) {
+        res.status(400).json({ message: error.message });
       }
     }
   }
