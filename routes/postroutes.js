@@ -45,7 +45,7 @@ postRouter.post('/admins/login', verifyAdminLogin, async (req, res) => {
     const admin = await getAdmin(email);
     const passwordPass = await compare(password, admin.rows[0]._password);
     if (!passwordPass) {
-      res.status(400).json({ passwordErr: 'wrong admin password entered' });
+      next(new Error('wrong admin password entered'));
     }
     const token = sign(
       { id: admin.rows[0].admins_id },
@@ -62,7 +62,7 @@ postRouter.post('/admins/login', verifyAdminLogin, async (req, res) => {
 postRouter.post('/', async (req, res) => {
   const { error } = userValidation(req.body);
   if (error) {
-    res.status(400).json({ joiErr: error.details[0].message });
+    next(new Error(error.details[0].message));
   } else {
     const salt = await bcrypt.genSalt(5);
     const hashPass = await bcrypt.hash(req.body.password, salt);
@@ -82,7 +82,7 @@ postRouter.post('/', async (req, res) => {
 postRouter.post('/admins', async (req, res) => {
   const { error } = userValidation(req.body);
   if (error) {
-    res.status(400).json({ joiErr: error.details[0].message });
+    next(new Error(error.details[0].message));
   } else {
     const salt = await bcrypt.genSalt(7);
     const hashPass = await bcrypt.hash(req.body.password, salt);
@@ -110,7 +110,7 @@ postRouter.post(
     }
     const { error } = parcelValidation(reqBody);
     if (error) {
-      res.status(404).json({ joiErr: error.details[0].message });
+      next(new Error(error.details[0].message));
     } else {
       try {
         const packageData = Object.values(req.body);

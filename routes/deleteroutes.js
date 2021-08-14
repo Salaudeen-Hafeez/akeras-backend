@@ -21,7 +21,7 @@ deleteRouter.delete('/:email/packages/:parcelid', async (req, res) => {
   try {
     const deletedParcel = deletePackage(parcelCon);
     res.json(parcelCon);
-    // res.json(deletedParcel.rows[0]);
+    res.json(deletedParcel.rows[0]);
   } catch (err) {
     res.json(err.message);
   }

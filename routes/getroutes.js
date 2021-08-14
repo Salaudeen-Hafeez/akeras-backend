@@ -42,7 +42,7 @@ getRouter.get(
   }
 );
 
-// GET a single user including the user's packages
+// GET a single user
 getRouter.get('/:userid/:email/:token', verifyToken, async (req, res) => {
   const userid = parseInt(req.params.userid);
   const incomingUser = { users_id: userid };
@@ -74,9 +74,7 @@ getRouter.get(
         [username]
       );
       if (!check.rows[0].exists) {
-        res
-          .status(404)
-          .json({ ErrorMessage: 'You do not have any package yet' });
+        next(new Error('You do not have any package yet'));
       } else {
         const packages = await client.query(
           `SELECT * FROM packages WHERE _username = $1`,
@@ -101,7 +99,7 @@ getRouter.get('/:email/packages/:packageid', async (req, res) => {
       [packageid, email]
     );
     if (!check.rows[0].exists) {
-      res.status(404).send('Wrong Email address or package ID');
+      next(new Error('Wrong Email address or package ID'));
     } else {
       const parcel = await client.query(
         `SELECT * FROM packages WHERE 
