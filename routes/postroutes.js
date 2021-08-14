@@ -29,7 +29,6 @@ postRouter.post('/login', verifyLogin, async (req, res, next) => {
     const user = await getUser(incomingUser);
     const passwordPass = await compare(password, user.rows[0]._password);
     if (!passwordPass) {
-      res.json({ message: 'inside wrong password' });
       next(new Error('wrong password entered'));
     }
     const token = sign({ id: user.rows[0].users_id }, 'jfgdjdgkfgerg');
@@ -46,6 +45,7 @@ postRouter.post('/admins/login', verifyAdminLogin, async (req, res) => {
     const admin = await getAdmin(email);
     const passwordPass = await compare(password, admin.rows[0]._password);
     if (!passwordPass) {
+      res.json({ message: 'inside wrong password' });
       next(new Error('wrong admin password entered'));
     }
     const token = sign(
