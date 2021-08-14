@@ -45,7 +45,7 @@ postRouter.post('/admins/login', verifyAdminLogin, async (req, res) => {
     const admin = await getAdmin(email);
     const passwordPass = await compare(password, admin.rows[0]._password);
     if (!passwordPass) {
-      throw new Error({ password: 'wrong admin password entered' });
+      throw new Error('wrong admin password entered');
     }
     const token = sign(
       { id: admin.rows[0].admins_id },
@@ -54,7 +54,7 @@ postRouter.post('/admins/login', verifyAdminLogin, async (req, res) => {
     admin.rows[0].admin_token = token;
     res.json(admin.rows[0]);
   } catch (error) {
-    res.status(400).json(error.message);
+    res.status(400).json({ password: error.message });
   }
 });
 
@@ -74,7 +74,7 @@ postRouter.post('/', async (req, res) => {
       const newUser = await postUser(userData);
       res.json(newUser.rows[0]);
     } catch (error) {
-      res.status(400).json(error.message);
+      res.status(400).json({ message: error.message });
     }
   }
 });
@@ -94,7 +94,7 @@ postRouter.post('/admins', async (req, res) => {
       const newAdmin = await postAdmin(adminData);
       res.json(newAdmin.rows[0]);
     } catch (error) {
-      res.status(400).json(error.message);
+      res.status(400).json({ message: error.message });
     }
   }
 });
@@ -118,7 +118,7 @@ postRouter.post(
         const newPackage = await postPackage(packageData);
         res.json(newPackage.rows[0]);
       } catch (error) {
-        res.status(400).json(error.message);
+        res.status(400).json({ message: error.message });
       }
     }
   }

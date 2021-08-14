@@ -10,7 +10,7 @@ getRouter.get('/:email/:token', verifyToken, async (req, res) => {
     const usersData = await client.query('SELECT * FROM users');
     res.json(usersData.rows);
   } catch (error) {
-    res.status(400).json(error.message);
+    res.status(400).json({ message: error.message });
   }
 });
 
@@ -20,7 +20,7 @@ getRouter.get('/:email/:token/packages', verifyToken, async (req, res) => {
     const packages = await client.query('SELECT * FROM packages');
     res.json(packages.rows);
   } catch (error) {
-    res.status(400).json(error.message);
+    res.status(400).json({ message: error.message });
   }
 });
 
@@ -37,7 +37,7 @@ getRouter.get(
       );
       res.json(packages.rows);
     } catch (error) {
-      res.status(400).json(error.message);
+      res.status(400).json({ message: error.message });
     }
   }
 );
@@ -58,7 +58,7 @@ getRouter.get('/:userid/:email/:token', verifyToken, async (req, res) => {
       res.json(user.rows[0]);
     }
   } catch (error) {
-    res.status(400).json(error.message);
+    res.status(400).json({ message: error.message });
   }
 });
 
@@ -74,7 +74,7 @@ getRouter.get(
         [username]
       );
       if (!check.rows[0].exists) {
-        throw new Error({ packages: 'You do not have any package yet' });
+        throw new Error('You do not have any package yet');
       } else {
         const packages = await client.query(
           `SELECT * FROM packages WHERE _username = $1`,
@@ -83,7 +83,7 @@ getRouter.get(
         res.json(packages.rows);
       }
     } catch (error) {
-      res.status(400).json(error.message);
+      res.status(400).json({ packages: error.message });
     }
   }
 );
@@ -99,7 +99,7 @@ getRouter.get('/:email/packages/:packageid', async (req, res) => {
       [packageid, email]
     );
     if (!check.rows[0].exists) {
-      throw new Error({ email: 'Wrong Email address or package ID' });
+      throw new Error('Wrong Email address or package ID');
     } else {
       const parcel = await client.query(
         `SELECT * FROM packages WHERE 
@@ -109,7 +109,7 @@ getRouter.get('/:email/packages/:packageid', async (req, res) => {
       res.json(parcel.rows[0]);
     }
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(400).json({ email: error.message });
   }
 });
 
