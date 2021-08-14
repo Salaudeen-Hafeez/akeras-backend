@@ -6,7 +6,7 @@ const { verify } = jwt;
 const verifyLogin = async (req, res, next) => {
   const { error } = loginValidation(req.body);
   if (error) {
-    next(new Error(error.details[0].message));
+    throw new Error(error.details[0].message);
   }
   const { email } = req.body;
   try {
@@ -15,7 +15,7 @@ const verifyLogin = async (req, res, next) => {
       [email]
     );
     if (!userExist.rows[0].exists) {
-      next(new Error(`user with ${email} does not exist`));
+      throw new Error(`user with ${email} does not exist`);
     }
     next();
   } catch (error) {
@@ -26,7 +26,7 @@ const verifyLogin = async (req, res, next) => {
 const verifyAdminLogin = async (req, res, next) => {
   const { error } = loginValidation(req.body);
   if (error) {
-    next(new Error(error.details[0].message));
+    throw new Error(error.details[0].message);
   }
   const { email } = req.body;
   try {
@@ -35,7 +35,7 @@ const verifyAdminLogin = async (req, res, next) => {
       [email]
     );
     if (!adminExist.rows[0].exists) {
-      next(new Error(`admin with ${email} does not exist`));
+      throw new Error(`admin with ${email} does not exist`);
     }
     next();
   } catch (error) {

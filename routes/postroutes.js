@@ -29,7 +29,7 @@ postRouter.post('/login', verifyLogin, async (req, res, next) => {
     const user = await getUser(incomingUser);
     const passwordPass = await compare(password, user.rows[0]._password);
     if (!passwordPass) {
-      next(new Error('wrong password entered'));
+      throw new Error('wrong password entered');
     }
     const token = sign({ id: user.rows[0].users_id }, 'jfgdjdgkfgerg');
     user.rows[0].auth_token = token;
@@ -62,7 +62,7 @@ postRouter.post('/admins/login', verifyAdminLogin, async (req, res) => {
 postRouter.post('/', async (req, res) => {
   const { error } = userValidation(req.body);
   if (error) {
-    next(new Error(error.details[0].message));
+    throw new Error(error.details[0].message);
   } else {
     const salt = await bcrypt.genSalt(5);
     const hashPass = await bcrypt.hash(req.body.password, salt);
@@ -82,7 +82,7 @@ postRouter.post('/', async (req, res) => {
 postRouter.post('/admins', async (req, res) => {
   const { error } = userValidation(req.body);
   if (error) {
-    next(new Error(error.details[0].message));
+    throw new Error(error.details[0].message);
   } else {
     const salt = await bcrypt.genSalt(7);
     const hashPass = await bcrypt.hash(req.body.password, salt);
@@ -110,7 +110,7 @@ postRouter.post(
     }
     const { error } = parcelValidation(reqBody);
     if (error) {
-      next(new Error(error.details[0].message));
+      throw new Error(error.details[0].message);
     } else {
       try {
         const packageData = Object.values(req.body);

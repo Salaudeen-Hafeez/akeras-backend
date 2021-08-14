@@ -74,7 +74,7 @@ getRouter.get(
         [username]
       );
       if (!check.rows[0].exists) {
-        next(new Error('You do not have any package yet'));
+        throw new Error('You do not have any package yet');
       } else {
         const packages = await client.query(
           `SELECT * FROM packages WHERE _username = $1`,
@@ -99,7 +99,7 @@ getRouter.get('/:email/packages/:packageid', async (req, res) => {
       [packageid, email]
     );
     if (!check.rows[0].exists) {
-      next(new Error('Wrong Email address or package ID'));
+      throw new Error('Wrong Email address or package ID');
     } else {
       const parcel = await client.query(
         `SELECT * FROM packages WHERE 
