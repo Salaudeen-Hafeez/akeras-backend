@@ -29,13 +29,13 @@ postRouter.post('/login', verifyLogin, async (req, res, next) => {
     const user = await getUser(incomingUser);
     const passwordPass = await compare(password, user.rows[0]._password);
     if (!passwordPass) {
-      throw new Error({ password: 'wrong password entered' });
+      throw new Error('wrong password entered');
     }
     const token = sign({ id: user.rows[0].users_id }, 'jfgdjdgkfgerg');
     user.rows[0].auth_token = token;
     res.json(user.rows[0]);
   } catch (error) {
-    res.status(400).json(error);
+    res.status(400).json({ password: error.message });
   }
 });
 

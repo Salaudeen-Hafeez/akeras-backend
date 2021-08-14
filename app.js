@@ -30,7 +30,7 @@ app.use((req, res) => {
 });
 
 app.use((err, req, res, next) => {
-  res.status(400).json({ message: err.message });
+  res.status(400).json(err.message);
 });
 
 const PORT = process.env.PORT || 5000;
