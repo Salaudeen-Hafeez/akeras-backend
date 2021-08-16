@@ -68,8 +68,8 @@ postRouter.post('/', async (req, res) => {
     const hashPass = await bcrypt.hash(req.body.password, salt);
     try {
       const check = await client.query(
-        `SELECT EXISTS(SELECT 1 FROM users WHERE _email = $1 OR _username = $2)`,
-        [req.body.email, req.body.username]
+        `SELECT EXISTS(SELECT 1 FROM users WHERE _email = $1)`,
+        [req.body.email]
       );
       if (check.rows[0].exists) {
         throw new Error(
