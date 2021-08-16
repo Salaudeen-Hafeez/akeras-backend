@@ -67,12 +67,22 @@ postRouter.post('/', async (req, res) => {
     const salt = await bcrypt.genSalt(5);
     const hashPass = await bcrypt.hash(req.body.password, salt);
     try {
-      const user = req.body;
-      user.password = hashPass;
-      const userData = Object.values(user);
-      userData[4] = 'active';
-      const newUser = await postUser(userData);
-      res.json(newUser.rows[0]);
+      const check = await client.query(
+        `SELECT EXISTS(SELECT 1 FROM users WHERE _email = $1 OR _username = $2)`,
+        [req.body.email, req.body.username]
+      );
+      if (check.rows[0].exists) {
+        throw new Error(
+          `User with ${req.body.email} or ${req.body.username} exist`
+        );
+      } else {
+        const user = req.body;
+        user.password = hashPass;
+        const userData = Object.values(user);
+        userData[4] = 'active';
+        const newUser = await postUser(userData);
+        res.json(newUser.rows[0]);
+      }
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
