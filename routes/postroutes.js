@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { client } from '../database/db';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import {
