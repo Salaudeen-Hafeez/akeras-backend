@@ -61,6 +61,7 @@ postRouter.post('/admins/login', verifyAdminLogin, async (req, res) => {
 
 // Add new user to the database
 postRouter.post('/', async (req, res) => {
+  delete req.body.password2;
   const { error } = userValidation(req.body);
   if (error) {
     throw new Error(error.details[0].message);
