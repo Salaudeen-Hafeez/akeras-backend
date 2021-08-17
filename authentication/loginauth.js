@@ -39,14 +39,14 @@ const verifyAdminLogin = async (req, res, next) => {
     }
     next();
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(400).json({ email: error.message });
   }
 };
 
 const verifyToken = (req, res, next) => {
   const { token, email, username } = req.params;
   if (!token && !(email || username)) {
-    res.status(400).json('Access denied');
+    throw new Error('Access denied');
   } else {
     try {
       if (email.includes('@sendit.com')) {
@@ -57,7 +57,7 @@ const verifyToken = (req, res, next) => {
         next();
       }
     } catch (error) {
-      res.status(400).json({ message: 'Invalid token' });
+      res.status(400).json({ auth_token: 'Invalid token' });
     }
   }
 };
