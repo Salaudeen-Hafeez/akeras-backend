@@ -57,7 +57,7 @@ const verifyToken = (req, res, next) => {
         next();
       }
     } catch (error) {
-      res.status(400).json({ auth_token: 'Invalid token' });
+      res.status(400).json({ auth_token: 'Invalid token. kindly login again' });
     }
   }
 };
