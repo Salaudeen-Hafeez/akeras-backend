@@ -86,7 +86,7 @@ postRouter.post('/', async (req, res) => {
         res.json(newUser.rows[0]);
       }
     } catch (error) {
-      res.status(400).json({ message: error.message });
+      res.status(400).json({ username: error.message });
     }
   }
 });
