@@ -92,6 +92,7 @@ postRouter.post('/', async (req, res) => {
 });
 
 postRouter.post('/admins', async (req, res) => {
+  delete req.body.password2;
   const { error } = userValidation(req.body);
   if (error) {
     throw new Error(error.details[0].message);
@@ -99,14 +100,24 @@ postRouter.post('/admins', async (req, res) => {
     const salt = await bcrypt.genSalt(7);
     const hashPass = await bcrypt.hash(req.body.password, salt);
     try {
-      const admin = req.body;
-      admin.password = hashPass;
-      const adminData = Object.values(admin);
-      adminData[4] = 'active';
-      const newAdmin = await postAdmin(adminData);
-      res.json(newAdmin.rows[0]);
+      const check = await client.query(
+        `SELECT EXISTS(SELECT 1 FROM admins WHERE _email = $1 OR _username = $2)`,
+        [req.body.email, req.body.username]
+      );
+      if (check.rows[0].exists) {
+        throw new Error(
+          `Admin with ${req.body.email} or ${req.body.username} exist`
+        );
+      } else {
+        const admin = req.body;
+        admin.password = hashPass;
+        const adminData = Object.values(admin);
+        adminData[4] = 'active';
+        const newAdmin = await postAdmin(adminData);
+        res.json(newAdmin.rows[0]);
+      }
     } catch (error) {
-      res.status(400).json({ message: error.message });
+      res.status(400).json({ username: error.message });
     }
   }
 });
