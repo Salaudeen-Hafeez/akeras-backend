@@ -83,7 +83,7 @@ postRouter.post('/', async (req, res) => {
         const userData = Object.values(user);
         userData[4] = 'active';
         const newUser = await postUser(userData);
-        res.json(newUser.rows);
+        res.json(newUser.rows[0]);
       }
     } catch (error) {
       res.status(400).json({ username: error.message });
