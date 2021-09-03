@@ -147,18 +147,19 @@ postRouter.post(
       reqBody['frajile'] = 'package not frajile';
     }
     const { error } = parcelValidation(reqBody); // Validate the incoming package data
-    if (error) {
-      throw new Error(error.details[0].message);
-    } else {
-      try {
-        const packageData = Object.values(req.body);
-        packageData.push('At the location');
-        const newPackage = await postPackage(packageData);
-        res.json(newPackage.rows[0]);
-      } catch (error) {
-        res.status(400).json({ message: error.message });
-      }
-    }
+    res.json(reqBody);
+    // if (error) {
+    //   throw new Error(error.details[0].message);
+    // } else {
+    //   try {
+    //     const packageData = Object.values(req.body);
+    //     packageData.push('At the location');
+    //     const newPackage = await postPackage(packageData);
+    //     res.json(newPackage.rows[0]);
+    //   } catch (error) {
+    //     res.status(400).json({ message: error.message });
+    //   }
+    // }
   }
 );
 
