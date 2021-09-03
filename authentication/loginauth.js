@@ -3,6 +3,10 @@ import { loginValidation } from './reqbodyauth';
 import { client } from '../database/db';
 
 const { verify } = jwt;
+
+/* Login authentication. First validate the user login credentials
+using loginValidation function. Then check if the user exist. if 
+all the check pass run the next() function */
 const verifyLogin = async (req, res, next) => {
   const { error } = loginValidation(req.body);
   if (error) {
@@ -23,6 +27,9 @@ const verifyLogin = async (req, res, next) => {
   }
 };
 
+/* Login authentication middle ware. First validate the admin 
+login credentialsusing loginValidation function. Then check if 
+the admin exist. if all the check pass run the next() function */
 const verifyAdminLogin = async (req, res, next) => {
   const { error } = loginValidation(req.body);
   if (error) {
@@ -43,6 +50,9 @@ const verifyAdminLogin = async (req, res, next) => {
   }
 };
 
+/* Verify token middle ware. First check if the user is admin,
+if the user is admin then verify the admin token otherwise 
+verify the user token */
 const verifyToken = (req, res, next) => {
   const { token, email, username } = req.params;
   if (!token && !(email || username)) {
