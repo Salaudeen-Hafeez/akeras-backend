@@ -82,7 +82,7 @@ postRouter.post('/', async (req, res) => {
       user.password = hashPass;
       const userData = Object.values(user);
       userData[4] = 'active';
-      const newUser = await postUser(userData);
+      // const newUser = await postUser(userData);
       // res.json(newUser.rows[0]);
     }
   } catch (error) {
