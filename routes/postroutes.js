@@ -62,33 +62,34 @@ postRouter.post('/admins/login', verifyAdminLogin, async (req, res) => {
 // Add new user to the database
 postRouter.post('/', async (req, res) => {
   delete req.body.password2;
-  const { error } = userValidation(req.body);
-  if (error) {
-    throw new Error(error.details[0].message);
-  } else {
-    const salt = await bcrypt.genSalt(5);
-    const hashPass = await bcrypt.hash(req.body.password, salt);
-    try {
-      const check = await client.query(
-        `SELECT EXISTS(SELECT 1 FROM users WHERE _email = $1 OR _username = $2)`,
-        [req.body.email, req.body.username]
-      );
-      if (check.rows[0].exists) {
-        throw new Error(
-          `User with ${req.body.email} or ${req.body.username} exist`
-        );
-      } else {
-        const user = req.body;
-        user.password = hashPass;
-        const userData = Object.values(user);
-        userData[4] = 'active';
-        const newUser = await postUser(userData);
-        res.json(newUser.rows[0]);
-      }
-    } catch (error) {
-      res.status(400).json({ username: error.message });
-    }
-  }
+  res.json(req.body);
+  // const { error } = userValidation(req.body);
+  // if (error) {
+  //   throw new Error(error.details[0].message);
+  // } else {
+  //   const salt = await bcrypt.genSalt(5);
+  //   const hashPass = await bcrypt.hash(req.body.password, salt);
+  //   try {
+  //     const check = await client.query(
+  //       `SELECT EXISTS(SELECT 1 FROM users WHERE _email = $1 OR _username = $2)`,
+  //       [req.body.email, req.body.username]
+  //     );
+  //     if (check.rows[0].exists) {
+  //       throw new Error(
+  //         `User with ${req.body.email} or ${req.body.username} exist`
+  //       );
+  //     } else {
+  //       const user = req.body;
+  //       user.password = hashPass;
+  //       const userData = Object.values(user);
+  //       userData[4] = 'active';
+  //       const newUser = await postUser(userData);
+  //       res.json(newUser.rows[0]);
+  //     }
+  //   } catch (error) {
+  //     res.status(400).json({ username: error.message });
+  //   }
+  // }
 });
 
 postRouter.post('/admins', async (req, res) => {
