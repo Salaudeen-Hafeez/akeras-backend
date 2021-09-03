@@ -3,8 +3,8 @@ import joi from '@hapi/joi';
 const userValidation = (data) => {
   const schema = joi.object({
     name: joi.string().min(6).required(),
-    username: joi.string().min(6).required(),
-    email: joi.string().min(6).required().email(),
+    username: joi.string().required(),
+    email: joi.string().required().email(),
     password: joi.string().min(6).required(),
   });
 
@@ -14,7 +14,7 @@ const userValidation = (data) => {
 
 const loginValidation = (data) => {
   const schema = joi.object({
-    email: joi.string().min(6).required().email(),
+    email: joi.string().required().email(),
     password: joi.string().min(6).required(),
   });
   const verified = schema.validate(data);
@@ -23,12 +23,12 @@ const loginValidation = (data) => {
 
 const parcelValidation = (data) => {
   const schema = joi.object({
-    username: joi.string().min(6).required(),
-    name: joi.string().min(6).required(),
-    location: joi.string().min(6).required(),
-    destination: joi.string().min(6).required(),
-    sender: joi.string().max(11).required(),
-    reciever: joi.string().max(11).required(),
+    username: joi.string().required(),
+    name: joi.string().required(),
+    location: joi.string().required(),
+    destination: joi.string().required(),
+    sender: joi.string().max(15).required(),
+    reciever: joi.string().max(15).required(),
     frajile: joi.string().required(),
   });
   const verified = schema.validate(data);

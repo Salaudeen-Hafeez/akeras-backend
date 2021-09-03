@@ -146,15 +146,13 @@ postRouter.post(
     if (reqBody.frajile === '') {
       reqBody['frajile'] = 'package not frajile';
     }
-    const validatedData = parcelValidation(reqBody); // Validate the incoming package data
-    if (validatedData.error) {
-      res.json(validatedData);
+    const { error } = parcelValidation(reqBody); // Validate the incoming package data
+    if (error) {
       throw new Error(error.details[0].message);
     } else {
       try {
         const packageData = Object.values(req.body);
         packageData.push('At the location');
-
         const newPackage = await postPackage(packageData);
         res.json(newPackage.rows[0]);
       } catch (error) {
