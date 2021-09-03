@@ -146,9 +146,9 @@ postRouter.post(
     if (reqBody.frajile === '') {
       reqBody['frajile'] = 'package not frajile';
     }
+    res.json(reqBody);
     // const { error } = parcelValidation(reqBody); // Validate the incoming package data
     // if (error) {
-    //   // res.json({ message: 'Package data error' });
     //   throw new Error(error.details[0].message);
     // } else {
     try {
