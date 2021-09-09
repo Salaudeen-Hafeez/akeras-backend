@@ -1,5 +1,6 @@
 import joi from '@hapi/joi';
 
+// Validate the new user data
 const userValidation = (data) => {
   const schema = joi.object({
     name: joi.string().min(6).required(),
@@ -12,6 +13,7 @@ const userValidation = (data) => {
   return verified;
 };
 
+// Validate the user login data
 const loginValidation = (data) => {
   const schema = joi.object({
     email: joi.string().required().email(),
@@ -21,6 +23,7 @@ const loginValidation = (data) => {
   return verified;
 };
 
+// Validate the package data
 const parcelValidation = (data) => {
   const schema = joi.object({
     username: joi.string().required(),

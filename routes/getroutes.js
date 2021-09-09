@@ -42,6 +42,23 @@ getRouter.get(
   }
 );
 
+// get the packages of a single user that are either on transit, at the location or delivered
+getRouter.get(
+  '/:email/:username/:token/packages/:condition',
+  verifyToken,
+  async (req, res) => {
+    const { condition, username } = req.params;
+    try {
+      const packages = await client.query(
+        'SELECT * FROM packages WHERE _status = $1 AND _username = $2',
+        [condition, username]
+      );
+      res.json(packages.rows);
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
+  }
+);
 // GET a single user
 getRouter.get('/:userid/:email/:token', verifyToken, async (req, res) => {
   const userid = parseInt(req.params.userid);
