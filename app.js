@@ -17,6 +17,9 @@ app.set('view engine', 'ejs');
 app.get('/', (req, res) => {
   res.render('home');
 });
+app.get('/login', (req, res) => {
+  res.render('login');
+});
 
 // The middleware that uses the router module
 app.use('/api/v1/users', getRouter);
