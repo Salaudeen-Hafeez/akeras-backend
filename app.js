@@ -12,6 +12,7 @@ app.use(express.json());
 
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
+app.set('views', 'myViews');
 
 // The middleware for the home page
 app.get('/', (req, res) => {
