@@ -101,7 +101,7 @@ const postPackage = (packageData) => {
 
 const deleteUser = (userData) => {
   const deletedUser = client.query(
-    `DELETE FROM users WHERE _email = $1 OR 
+    `DELETE FROM users WHERE _username = $1 OR 
        users_id = $2 RETURNING *`,
     userData
   );

@@ -4,9 +4,9 @@ import { deleteUser, deletePackage } from '../database/db';
 
 const deleteRouter = Router();
 
-deleteRouter.delete('/:email/:userid', async (req, res) => {
+deleteRouter.delete('/:username/:userid/:email/:token', async (req, res) => {
   const userid = parseInt(req.params.userid);
-  const userData = [req.params.email, userid];
+  const userData = [req.params.username, userid];
   try {
     const deletedUser = await deleteUser(userData);
     res.json(deletedUser.rows);
