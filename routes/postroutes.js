@@ -36,9 +36,13 @@ postRouter.post('/login', verifyLogin, async (req, res, next) => {
     if (!passwordPass) {
       throw new Error('wrong password entered');
     }
+    const packages = await client.query(
+      `SELECT * FROM packages WHERE _username = $1`,
+      [user.rows[0]._username]
+    );
     const token = sign({ id: user.rows[0].users_id }, 'jfgdjdgkfgerg'); // Generate token for the user
     user.rows[0].auth_token = token;
-    res.json(user.rows[0]);
+    res.json({ user: user.rows[0], packages });
   } catch (error) {
     res.status(400).json({ password: error.message });
   }
