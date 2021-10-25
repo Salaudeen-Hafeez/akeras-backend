@@ -61,7 +61,7 @@ getRouter.get(
   }
 );
 // GET a single user
-getRouter.get('/:userid/:email/:token', verifyToken, async (req, res) => {
+getRouter.get('/:userid/:email/:token', verifyUserToken, async (req, res) => {
   const userid = parseInt(req.params.userid);
   const incomingUser = { users_id: userid };
   try {
