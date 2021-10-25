@@ -5,7 +5,7 @@ import { verifyUserToken, verifyAdminToken } from '../authentication/loginauth';
 const getRouter = Router();
 
 // GET all the users
-getRouter.get('/:email/:token', verifyAdminToken, async (req, res) => {
+getRouter.get('/:email/:token', async (req, res) => {
   try {
     const usersData = await client.query('SELECT * FROM users');
     res.json(usersData.rows);
@@ -15,7 +15,7 @@ getRouter.get('/:email/:token', verifyAdminToken, async (req, res) => {
 });
 
 // GET all the users' packages
-getRouter.get('/:email/:token/packages', verifyAdminToken, async (req, res) => {
+getRouter.get('/:email/:token/packages', async (req, res) => {
   try {
     const packages = await client.query('SELECT * FROM packages');
     res.json(packages.rows);
