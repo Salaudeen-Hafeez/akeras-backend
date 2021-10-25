@@ -1,19 +1,23 @@
 import { Router } from 'express';
-import { verifyToken } from '../authentication/loginauth';
+import { verifyAdminToken } from '../authentication/loginauth';
 import { deleteUser, deletePackage } from '../database/db';
 
 const deleteRouter = Router();
 
-deleteRouter.delete('/:username/:userid/:email/:token', async (req, res) => {
-  const userid = parseInt(req.params.userid);
-  const userData = [req.params.username, userid];
-  try {
-    const deletedUser = await deleteUser(userData);
-    res.json(deletedUser.rows);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
+deleteRouter.delete(
+  '/:username/:userid/:email/:token',
+  verifyAdminToken,
+  async (req, res) => {
+    const userid = parseInt(req.params.userid);
+    const userData = [req.params.username, userid];
+    try {
+      const deletedUser = await deleteUser(userData);
+      res.json(deletedUser.rows);
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
   }
-});
+);
 
 deleteRouter.delete('/:username/packages/:parcelid', async (req, res) => {
   const parcelid = parseInt(req.params.parcelid);
