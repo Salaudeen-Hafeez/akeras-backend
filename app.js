@@ -6,7 +6,7 @@ import updateRouter from './routes/updateroutes';
 import deleteRouter from './routes/deleteroutes';
 
 const app = express();
-app.use(cors());
+app.options('*', cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
