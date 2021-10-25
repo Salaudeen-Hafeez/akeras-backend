@@ -9,7 +9,11 @@ import {
   getUser,
   getAdmin,
 } from '../database/db';
-import { verifyLogin, verifyUserToken } from '../authentication/loginauth';
+import {
+  verifyLogin,
+  verifyUserToken,
+  verifyAdminLogin,
+} from '../authentication/loginauth';
 import {
   userValidation,
   parcelValidation,
