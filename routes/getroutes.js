@@ -1,11 +1,12 @@
 import { Router } from 'express';
 import { client, getUser } from '../database/db';
-import { verifyToken } from '../authentication/loginauth';
+import { verifyUserToken, verifyAdminToken } from '../authentication/loginauth';
 
 const getRouter = Router();
 
 // GET all the users
-getRouter.get('/:email/:token', verifyToken, async (req, res) => {
+getRouter.get('/:email/:token', verifyAdminToken, async (req, res) => {
+  res.json('Admin token passed');
   try {
     const usersData = await client.query('SELECT * FROM users');
     res.json(usersData.rows);
@@ -14,8 +15,8 @@ getRouter.get('/:email/:token', verifyToken, async (req, res) => {
   }
 });
 
-// GET all the user's packages
-getRouter.get('/:email/:token/packages', verifyToken, async (req, res) => {
+// GET all the users' packages
+getRouter.get('/:email/:token/packages', verifyAdminToken, async (req, res) => {
   try {
     const packages = await client.query('SELECT * FROM packages');
     res.json(packages.rows);
@@ -27,7 +28,7 @@ getRouter.get('/:email/:token/packages', verifyToken, async (req, res) => {
 // GET all the new user's packages
 getRouter.get(
   '/:email/:token/packages/:condition',
-  verifyToken,
+  verifyAdminToken,
   async (req, res) => {
     const { condition } = req.params;
     try {
@@ -45,7 +46,7 @@ getRouter.get(
 // get the packages of a single user that are either on transit, at the location or delivered
 getRouter.get(
   '/:email/:username/:token/packages/:condition',
-  verifyToken,
+  verifyUserToken,
   async (req, res) => {
     const { condition, username } = req.params;
     try {
@@ -82,7 +83,7 @@ getRouter.get('/:userid/:email/:token', verifyToken, async (req, res) => {
 // GET all packages of a single user
 getRouter.get(
   '/:username/:userid/:email/:token/packages',
-  verifyToken,
+  verifyAdminToken,
   async (req, res) => {
     const { username } = req.params;
     try {
