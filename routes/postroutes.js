@@ -63,7 +63,6 @@ postRouter.post('/admins/login', verifyAdminLogin, async (req, res) => {
     admin.rows[0].admin_token = token;
     res.json(admin.rows[0]);
   } catch (error) {
-    res.set('Access-Control-Allow-Origin', '*');
     res.status(400).json({ password: error.message });
   }
 });

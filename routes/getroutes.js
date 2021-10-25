@@ -20,7 +20,6 @@ getRouter.get('/:email/:token/packages', async (req, res) => {
     const packages = await client.query('SELECT * FROM packages');
     res.json(packages.rows);
   } catch (error) {
-    res.set('Access-Control-Allow-Origin', '*');
     res.status(400).json({ message: error.message });
   }
 });
