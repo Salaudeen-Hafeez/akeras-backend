@@ -82,7 +82,7 @@ getRouter.get('/:userid/:email/:token', verifyUserToken, async (req, res) => {
 // GET all packages of a single user
 getRouter.get(
   '/:username/:userid/:email/:token/packages',
-  verifyAdminToken,
+  verifyAdminToken || verifyUserToken,
   async (req, res) => {
     const { username } = req.params;
     try {
