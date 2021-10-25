@@ -42,7 +42,7 @@ postRouter.post('/login', verifyLogin, async (req, res, next) => {
     );
     const token = sign({ id: user.rows[0].users_id }, 'jfgdjdgkfgerg'); // Generate token for the user
     user.rows[0].auth_token = token;
-    res.json({ user: user.rows[0], packages });
+    res.json({ user: user.rows[0], packages: packages.rows });
   } catch (error) {
     res.status(400).json({ password: error.message });
   }
