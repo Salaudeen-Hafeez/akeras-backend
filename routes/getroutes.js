@@ -6,6 +6,7 @@ const getRouter = Router();
 
 // GET all the users
 getRouter.get('/:email/:token', async (req, res) => {
+  res.json({ ade: 'I love POSTMAN' });
   try {
     const usersData = await client.query('SELECT * FROM users');
     res.json(usersData.rows);
