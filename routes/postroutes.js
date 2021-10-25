@@ -9,7 +9,11 @@ import {
   getUser,
   getAdmin,
 } from '../database/db';
-import { verifyAdminLogin, verifyLogin } from '../authentication/loginauth';
+import {
+  verifyLogin,
+  verifyLogin,
+  verifyUserToken,
+} from '../authentication/loginauth';
 import {
   userValidation,
   parcelValidation,
@@ -136,7 +140,7 @@ token is correct, check if the frijile property is empty.
 if everything is fine add the package to the database  */
 postRouter.post(
   '/:username/:email/:token/packages',
-  verifyToken,
+  verifyUserToken,
   async (req, res) => {
     const reqBody = req.body;
     if (reqBody.frajile === '') {
