@@ -6,7 +6,6 @@ const getRouter = Router();
 
 // GET all the users
 getRouter.get('/:email/:token', verifyAdminToken, async (req, res) => {
-  res.json('Admin token passed');
   try {
     const usersData = await client.query('SELECT * FROM users');
     res.json(usersData.rows);

@@ -68,7 +68,6 @@ const verifyUserToken = (req, res, next) => {
 };
 
 const verifyAdminToken = (req, res, next) => {
-  res.json(req.params);
   const { token, email, username } = req.params;
   if (!token && !(email || username)) {
     throw new Error('Access denied');
