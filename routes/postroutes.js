@@ -64,8 +64,14 @@ postRouter.post('/admins/login', verifyAdminLogin, async (req, res) => {
       { id: admin.rows[0].admins_id }, // Generate token for the admin
       'jfgdjdgSenditadminkfgerg'
     );
+    const packages = await client.query(`SELECT * FROM packages`);
+    const users = await client.query(`SELECT * FROM users`);
     admin.rows[0].admin_token = token;
-    res.json(admin.rows[0]);
+    res.json({
+      admin: admin.rows[0],
+      packages: packages.rows,
+      users: users.rows,
+    });
   } catch (error) {
     res.status(400).json({ password: error.message });
   }
