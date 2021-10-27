@@ -5,7 +5,7 @@ import { deleteUser, deletePackage } from '../database/db';
 const deleteRouter = Router();
 
 deleteRouter.delete(
-  '/:username/:userid/:email/:token',
+  '/:email/:token/:username/:userid',
   verifyAdminToken,
   async (req, res) => {
     const userid = parseInt(req.params.userid);
@@ -19,15 +19,18 @@ deleteRouter.delete(
   }
 );
 
-deleteRouter.delete('/:username/packages/:parcelid', async (req, res) => {
-  const parcelid = parseInt(req.params.parcelid);
-  const parcelCon = [req.params.username, parcelid];
-  try {
-    const deletedParcel = await deletePackage(parcelCon);
-    res.json(deletedParcel.rows[0]);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
+deleteRouter.delete(
+  '/:email/:token/:username/packages/:parcelid',
+  async (req, res) => {
+    const parcelid = parseInt(req.params.parcelid);
+    const parcelCon = [req.params.username, parcelid];
+    try {
+      const deletedParcel = await deletePackage(parcelCon);
+      res.json(deletedParcel.rows[0]);
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
   }
-});
+);
 
 export default deleteRouter;
