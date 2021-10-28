@@ -73,7 +73,7 @@ postRouter.post('/admins/login', verifyAdminLogin, async (req, res) => {
       users: users.rows,
     });
   } catch (error) {
-    res.status(400).json({ password: error.message });
+    res.status(400).json({ admin: error.message });
   }
 });
 
