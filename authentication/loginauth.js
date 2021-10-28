@@ -8,12 +8,12 @@ const { verify } = jwt;
 using loginValidation function. Then check if the user exist. if 
 all the check pass run the next() function */
 const verifyLogin = async (req, res, next) => {
-  const { error } = loginValidation(req.body);
-  if (error) {
-    throw new Error(error.details[0].message);
-  }
   const { email } = req.body;
   try {
+    const { error } = loginValidation(req.body);
+    if (error) {
+      throw new Error(error.details[0].message);
+    }
     const userExist = await client.query(
       `SELECT EXISTS(SELECT 1 FROM users WHERE _email = $1)`,
       [email]
@@ -31,12 +31,12 @@ const verifyLogin = async (req, res, next) => {
 login credentials using loginValidation function. Then check if 
 the admin exist. if all the check pass run the next() function */
 const verifyAdminLogin = async (req, res, next) => {
-  const { error } = loginValidation(req.body);
-  if (error) {
-    throw new Error(error.details[0].message);
-  }
   const { email } = req.body;
   try {
+    const { error } = loginValidation(req.body);
+    if (error) {
+      throw new Error(error.details[0].message);
+    }
     const adminExist = await client.query(
       `SELECT EXISTS(SELECT 1 FROM admins WHERE _email = $1)`,
       [email]
