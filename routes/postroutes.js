@@ -58,7 +58,8 @@ postRouter.post('/admins/login', verifyAdminLogin, async (req, res) => {
     const admin = await getAdmin(email);
     const passwordPass = await compare(password, admin.rows[0]._password); // Check if the admin password is correct
     if (!passwordPass) {
-      throw new Error('wrong admin password entered');
+      res.json({ admin: 'Bad password' });
+      //throw new Error('wrong admin password entered');
     }
     const token = sign(
       { id: admin.rows[0].admins_id }, // Generate token for the admin
