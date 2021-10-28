@@ -49,7 +49,7 @@ getRouter.get(
 // get the packages of a single user that are either on transit, at the location or delivered
 getRouter.get(
   '/:email/:username/:token/packages/:condition',
-  verifyAdminToken,
+  verifyToken,
   async (req, res) => {
     const { condition, username } = req.params;
     try {
