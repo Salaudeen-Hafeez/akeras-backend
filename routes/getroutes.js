@@ -35,11 +35,19 @@ getRouter.get(
   async (req, res) => {
     const { condition } = req.params;
     try {
-      const packages = await client.query(
-        'SELECT * FROM packages WHERE _status = $1',
+      const check = await client.query(
+        `SELECT EXISTS(SELECT 1 FROM packages WHERE _status = $1)`,
         [condition]
       );
-      res.json(packages.rows);
+      if (!check.rows[0].exists) {
+        throw new Error(`There is no package ${condition}`);
+      } else {
+        const packages = await client.query(
+          'SELECT * FROM packages WHERE _status = $1',
+          [condition]
+        );
+        res.json(packages.rows);
+      }
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
@@ -57,17 +65,15 @@ getRouter.get(
         `SELECT EXISTS(SELECT 1 FROM packages WHERE _status = $1)`,
         [condition]
       );
-      res.json({ data: check });
-      // if (!check.rows[0].exists) {
-      //   res.json({ data: `There is no package ${condition}` });
-      //   // throw new Error(`There is no package ${condition}`);
-      // } else {
-      //   const packages = await client.query(
-      //     'SELECT * FROM packages WHERE _status = $1 AND _username = $2',
-      //     [condition, username]
-      //   );
-      //   res.json(packages.rows);
-      // }
+      if (!check.rows[0].exists) {
+        throw new Error(`There is no package ${condition}`);
+      } else {
+        const packages = await client.query(
+          'SELECT * FROM packages WHERE _status = $1 AND _username = $2',
+          [condition, username]
+        );
+        res.json(packages.rows);
+      }
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
