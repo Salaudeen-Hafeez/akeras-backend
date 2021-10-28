@@ -33,7 +33,6 @@ the admin exist. if all the check pass run the next() function */
 const verifyAdminLogin = async (req, res, next) => {
   const { email } = req.body;
   try {
-    res.json(req.body);
     const { error } = loginValidation(req.body);
     if (error) {
       throw new Error(error.details[0].message);
