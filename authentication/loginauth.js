@@ -23,7 +23,7 @@ const verifyLogin = async (req, res, next) => {
     }
     next();
   } catch (error) {
-    res.status(400).json({ admin: error.message });
+    res.status(400).json({ user: error.message });
   }
 };
 
