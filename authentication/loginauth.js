@@ -81,6 +81,25 @@ const verifyAdminToken = (req, res, next) => {
   }
 };
 
+const verifyToken = (req, res, next) => {
+  const { token, email, username } = req.params;
+  if (!token && !(email || username)) {
+    throw new Error('Access denied');
+  } else {
+    try {
+      if (email.includes('@sendit.com')) {
+        verify(token, 'jfgdjdgSenditadminkfgerg');
+        next();
+      } else {
+        verify(token, 'jfgdjdgkfgerg');
+        next();
+      }
+    } catch (error) {
+      res.status(400).json({ auth_token: 'Invalid token. kindly login again' });
+    }
+  }
+};
+
 const _verifyLogin = verifyLogin;
 export { _verifyLogin as verifyLogin };
 const _verifyAdminLogin = verifyAdminLogin;
@@ -89,3 +108,5 @@ const _verifyUserToken = verifyUserToken;
 export { _verifyUserToken as verifyUserToken };
 const _verifyAdminToken = verifyAdminToken;
 export { _verifyAdminToken as verifyAdminToken };
+const _verifyToken = verifyToken;
+export { _verifyToken as verifyToken };
