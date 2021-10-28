@@ -58,7 +58,8 @@ getRouter.get(
         [condition]
       );
       if (!check.rows[0].exists) {
-        throw new Error(`There is no package ${condition}`);
+        res.json({ data: `There is no package ${condition}` });
+        // throw new Error(`There is no package ${condition}`);
       } else {
         const packages = await client.query(
           'SELECT * FROM packages WHERE _status = $1 AND _username = $2',
