@@ -1,6 +1,10 @@
 import { Router } from 'express';
 import { client, getUser } from '../database/db';
-import { verifyUserToken, verifyAdminToken } from '../authentication/loginauth';
+import {
+  verifyUserToken,
+  verifyAdminToken,
+  verifyToken,
+} from '../authentication/loginauth';
 
 const getRouter = Router();
 
@@ -82,7 +86,7 @@ getRouter.get('/:userid/:email/:token', verifyUserToken, async (req, res) => {
 // GET all packages of a single user
 getRouter.get(
   '/:username/:userid/:email/:token/packages',
-  verifyAdminToken || verifyUserToken,
+  verifyToken,
   async (req, res) => {
     const { username } = req.params;
     try {
