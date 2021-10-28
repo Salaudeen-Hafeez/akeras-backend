@@ -23,7 +23,7 @@ const verifyLogin = async (req, res, next) => {
     }
     next();
   } catch (error) {
-    res.status(400).json({ email: error.message });
+    res.status(400).json({ admin: error.message });
   }
 };
 
@@ -46,7 +46,7 @@ const verifyAdminLogin = async (req, res, next) => {
     }
     next();
   } catch (error) {
-    res.status(400).json({ email: error.message });
+    res.status(400).json({ admin: error.message });
   }
 };
 
