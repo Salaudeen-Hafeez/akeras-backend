@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { verifyUserToken } from '../authentication/loginauth';
+import { verifyToken } from '../authentication/loginauth';
 import { updateUser, updatePackage } from '../database/db';
 
 const updateRouter = Router();
@@ -34,7 +34,7 @@ updateRouter.put('/:email', async (req, res) => {
 // UPDATE the status of the user's parcel
 updateRouter.put(
   '/:email/:userid/:token/packages/:parcelid',
-  verifyUserToken,
+  verifyToken,
   async (req, res) => {
     const con = parseInt(req.params.parcelid);
     const value = Object.values(req.body);
