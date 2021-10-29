@@ -62,8 +62,8 @@ getRouter.get(
     const { condition, username } = req.params;
     try {
       const check = await client.query(
-        `SELECT EXISTS(SELECT 1 FROM packages WHERE _username = $1)`,
-        [username]
+        `SELECT EXISTS(SELECT 1 FROM packages WHERE _username = $1 AND _status = $2)`,
+        [username, condition]
       );
       if (!check.rows[0].exists) {
         throw new Error(`There is no package ${condition}`);
