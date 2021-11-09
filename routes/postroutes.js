@@ -163,9 +163,8 @@ postRouter.post(
       try {
         const packageData = Object.values(req.body);
         packageData.push('At the location');
-        res.json({ msg: packageData });
-        // const newPackage = await postPackage(packageData);
-        // res.json(newPackage.rows[0]);
+        const newPackage = await postPackage(packageData);
+        res.json(newPackage.rows[0]);
       } catch (error) {
         res.status(400).json({ messageErr: error.message });
       }
