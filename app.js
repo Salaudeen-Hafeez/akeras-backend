@@ -15,7 +15,7 @@ app.set('view engine', 'ejs');
 
 // The middleware for the home page
 app.get('/', (req, res) => {
-  res.render('home');
+  res.json({ message: 'Welcom to Akera logistics' });
 });
 
 // The middleware that uses the router module
