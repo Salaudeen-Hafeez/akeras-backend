@@ -19,7 +19,7 @@ const verifyLogin = async (req, res, next) => {
       [email]
     );
     if (!userExist.rows[0].exists) {
-      throw new Error(`user with ${email} does not exist`);
+      throw new Error(`Invalid email address or password`);
     }
     next();
   } catch (error) {

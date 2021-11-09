@@ -34,7 +34,7 @@ postRouter.post('/login', verifyLogin, async (req, res, next) => {
     const user = await getUser(incomingUser);
     const passwordPass = await compare(password, user.rows[0]._password); // Check if the password is correct
     if (!passwordPass) {
-      throw new Error('wrong password entered');
+      throw new Error('Invalid email address or password');
     }
     const packages = await client.query(
       `SELECT * FROM packages WHERE _username = $1`,
