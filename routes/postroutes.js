@@ -140,7 +140,7 @@ postRouter.post('/admins', async (req, res) => {
         res.json(newAdmin.rows[0]);
       }
     } catch (error) {
-      res.status(400).json({ usernameErr: error.message });
+      res.status(400).json({ adminErr: error.message });
     }
   }
 });
