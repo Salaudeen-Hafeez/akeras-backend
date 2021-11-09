@@ -95,7 +95,7 @@ postRouter.post('/', async (req, res) => {
       );
       if (check.rows[0].exists) {
         throw new Error(
-          `User with ${req.body.email} or ${req.body.username} exist`
+          `An account with this email or username already exists`
         );
       } else {
         const user = req.body;
