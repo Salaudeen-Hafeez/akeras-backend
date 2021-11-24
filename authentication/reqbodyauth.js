@@ -30,8 +30,8 @@ const parcelValidation = (data) => {
     name: joi.string().required(),
     location: joi.string().required(),
     destination: joi.string().required(),
-    sender: joi.string().max(15).required(),
-    reciever: joi.string().max(15).required(),
+    sender: joi.string().required(),
+    reciever: joi.string().required(),
     frajile: joi.string().required(),
   });
   const verified = schema.validate(data);

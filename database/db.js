@@ -82,13 +82,13 @@ const postAdmin = (adminData) => {
 const postPackage = (packageData) => {
   const newPackage = client.query(
     `INSERT INTO packages (
+        _username,
         _name,
         _location,
         _destination,
         _sender,
         _reciever,
         _frajile,
-        _username,
         _status
         ) VALUES (
           $1, $2, $3, $4,
