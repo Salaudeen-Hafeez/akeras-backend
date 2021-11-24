@@ -14,7 +14,7 @@ deleteRouter.delete(
       const deletedUser = await deleteUser(userData);
       res.json(deletedUser.rows);
     } catch (error) {
-      res.status(400).json({ message: error.message });
+      res.status(400).json({ errMessage: error.message });
     }
   }
 );
@@ -28,7 +28,7 @@ deleteRouter.delete(
       const deletedParcel = await deletePackage(parcelCon);
       res.json(deletedParcel.rows[0]);
     } catch (error) {
-      res.status(400).json({ message: error.message });
+      res.status(400).json({ errMessage: error.message });
     }
   }
 );

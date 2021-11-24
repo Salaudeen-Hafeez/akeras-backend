@@ -23,7 +23,7 @@ const verifyLogin = async (req, res, next) => {
     }
     next();
   } catch (error) {
-    res.status(400).json({ userErr: error.message });
+    res.status(400).json({ errMessage: error.message });
   }
 };
 
@@ -46,7 +46,7 @@ const verifyAdminLogin = async (req, res, next) => {
     }
     next();
   } catch (error) {
-    res.status(400).json({ adminErr: error.message });
+    res.status(400).json({ errMessage: error.message });
   }
 };
 
@@ -62,7 +62,7 @@ const verifyUserToken = (req, res, next) => {
       verify(token, 'jfgdjdgkfgerg');
       next();
     } catch (error) {
-      res.status(400).json({ auth_token: 'Invalid token. kindly login again' });
+      res.status(400).json({ errMessage: 'Invalid token. kindly login again' });
     }
   }
 };
@@ -76,7 +76,7 @@ const verifyAdminToken = (req, res, next) => {
       verify(token, 'jfgdjdgSenditadminkfgerg');
       next();
     } catch (error) {
-      res.status(400).json({ tokenErr: 'Invalid token. kindly login again' });
+      res.status(400).json({ errMessage: 'Invalid token. kindly login again' });
     }
   }
 };
@@ -95,7 +95,7 @@ const verifyToken = (req, res, next) => {
         next();
       }
     } catch (error) {
-      res.status(400).json({ tokenErr: 'Invalid token. kindly login again' });
+      res.status(400).json({ errMessage: 'Invalid token. kindly login again' });
     }
   }
 };

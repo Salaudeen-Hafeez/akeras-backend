@@ -14,7 +14,7 @@ getRouter.get('/:email/:token', async (req, res) => {
     const usersData = await client.query('SELECT * FROM users');
     res.json(usersData.rows);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(400).json({ errMessage: error.message });
   }
 });
 
@@ -24,7 +24,7 @@ getRouter.get('/:email/:token/packages', async (req, res) => {
     const packages = await client.query('SELECT * FROM packages');
     res.json(packages.rows);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(400).json({ errMessage: error.message });
   }
 });
 
@@ -49,7 +49,7 @@ getRouter.get(
         res.json(packages.rows);
       }
     } catch (error) {
-      res.status(400).json({ message: error.message });
+      res.status(400).json({ errMessage: error.message });
     }
   }
 );
@@ -75,7 +75,7 @@ getRouter.get(
         res.json(packages.rows);
       }
     } catch (error) {
-      res.status(400).json({ message: error.message });
+      res.status(400).json({ errMessage: error.message });
     }
   }
 );
@@ -95,7 +95,7 @@ getRouter.get('/:userid/:email/:token', verifyUserToken, async (req, res) => {
       res.json(user.rows[0]);
     }
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(400).json({ errMessage: error.message });
   }
 });
 
@@ -120,7 +120,7 @@ getRouter.get(
         res.json(packages.rows);
       }
     } catch (error) {
-      res.status(400).json({ packages: error.message });
+      res.status(400).json({ errMessage: error.message });
     }
   }
 );
@@ -146,7 +146,7 @@ getRouter.get('/:email/packages/:packageid', async (req, res) => {
       res.json(parcel.rows[0]);
     }
   } catch (error) {
-    res.status(400).json({ email: error.message });
+    res.status(400).json({ errMessage: error.message });
   }
 });
 

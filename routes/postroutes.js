@@ -44,7 +44,7 @@ postRouter.post('/login', verifyLogin, async (req, res, next) => {
     user.rows[0].auth_token = token;
     res.json({ user: user.rows[0], packages: packages.rows });
   } catch (error) {
-    res.status(400).json({ userErr: error.message });
+    res.status(400).json({ errMessage: error.message });
   }
 });
 
@@ -73,7 +73,7 @@ postRouter.post('/admins/login', verifyAdminLogin, async (req, res) => {
       users: users.rows,
     });
   } catch (error) {
-    res.status(400).json({ adminErr: error.message });
+    res.status(400).json({ errMessage: error.message });
   }
 });
 
@@ -110,7 +110,7 @@ postRouter.post('/', async (req, res) => {
         res.json({ user: newUser.rows[0], packages: packages.rows });
       }
     } catch (error) {
-      res.status(400).json({ message: error.message });
+      res.status(400).json({ errMessage: error.message });
     }
   }
 });
@@ -144,7 +144,7 @@ postRouter.post('/admins', async (req, res) => {
         res.json(newAdmin.rows[0]);
       }
     } catch (error) {
-      res.status(400).json({ adminErr: error.message });
+      res.status(400).json({ errMessage: error.message });
     }
   }
 });
@@ -170,7 +170,7 @@ postRouter.post(
         const newPackage = await postPackage(packageData);
         res.json(newPackage.rows[0]);
       } catch (error) {
-        res.status(400).json({ messageErr: error.message });
+        res.status(400).json({ errMessage: error.message });
       }
     }
   }
