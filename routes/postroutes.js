@@ -103,10 +103,14 @@ postRouter.post('/', async (req, res) => {
         const userData = Object.values(user);
         userData[4] = 'active';
         const newUser = await postUser(userData);
-        res.json(newUser.rows[0]);
+        const packages = await client.query(
+          `SELECT * FROM packages WHERE _username = $1`,
+          [newUser.rows[0]._username]
+        );
+        res.json({ user: newUser.rows[0], packages: packages.rows });
       }
     } catch (error) {
-      res.status(400).json({ usernameErr: error.message });
+      res.status(400).json({ message: error.message });
     }
   }
 });
@@ -156,20 +160,20 @@ postRouter.post(
     if (reqBody.frajile === '') {
       reqBody['frajile'] = 'package not frajile';
     }
-    // const { error } = parcelValidation(reqBody); // Validate the incoming package data
-    // if (error) {
-    //   throw new Error(error.details[0].message);
-    // } else {
-    try {
-      const packageData = Object.values(req.body);
-      packageData.push('At the location');
-      const newPackage = await postPackage(packageData);
-      res.json(newPackage.rows[0]);
-    } catch (error) {
-      res.status(400).json({ messageErr: error.message });
+    const { error } = parcelValidation(reqBody); // Validate the incoming package data
+    if (error) {
+      throw new Error(error.details[0].message);
+    } else {
+      try {
+        const packageData = Object.values(req.body);
+        packageData.push('At the location');
+        const newPackage = await postPackage(packageData);
+        res.json(newPackage.rows[0]);
+      } catch (error) {
+        res.status(400).json({ messageErr: error.message });
+      }
     }
   }
-  //}
 );
 
 export default postRouter;
