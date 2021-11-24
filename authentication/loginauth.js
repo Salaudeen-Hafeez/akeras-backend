@@ -42,7 +42,7 @@ const verifyAdminLogin = async (req, res, next) => {
       [email]
     );
     if (!adminExist.rows[0].exists) {
-      throw new Error(`admin with ${email} does not exist`);
+      throw new Error(`Invalid email address or password`);
     }
     next();
   } catch (error) {
