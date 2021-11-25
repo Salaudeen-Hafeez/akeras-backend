@@ -27,7 +27,7 @@ deleteRouter.delete(
   async (req, res) => {
     const parcelid = parseInt(req.params.parcelid);
     const parcelCon = [req.params.username, parcelid];
-    const { status } = req.params;
+    const status = req.params.status;
     try {
       const deletedParcel = await deletePackage(parcelCon);
       if (deletedParcel.rows[0].parcel_id) {
