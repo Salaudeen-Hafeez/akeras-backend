@@ -29,7 +29,10 @@ deleteRouter.delete(
     const parcelCon = [req.params.username, parcelid];
     try {
       const deletedParcel = await deletePackage(parcelCon);
-      res.json(deletedParcel.rows[0]);
+      if (deletedParcel.rows[0].parcel_id) {
+        const packages = await client.query('SELECT * FROM packages');
+        res.json(packages.rows);
+      }
     } catch (error) {
       res.status(400).json({ errMessage: error.message });
     }
