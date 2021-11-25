@@ -32,7 +32,7 @@ deleteRouter.delete(
       const deletedParcel = await deletePackage(parcelCon);
       if (deletedParcel.rows[0].parcel_id) {
         const packages = await client.query(
-          'SELECT * FROM packages WHERE _status = $',
+          'SELECT * FROM packages WHERE _status = $1',
           [status]
         );
         res.json(packages.rows);
