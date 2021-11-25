@@ -23,14 +23,18 @@ deleteRouter.delete(
 );
 
 deleteRouter.delete(
-  '/:email/:token/:username/packages/:parcelid',
+  '/:email/:token/:username/packages/:parcelid/:status',
   async (req, res) => {
     const parcelid = parseInt(req.params.parcelid);
     const parcelCon = [req.params.username, parcelid];
+    const { status } = req.params;
     try {
       const deletedParcel = await deletePackage(parcelCon);
       if (deletedParcel.rows[0].parcel_id) {
-        const packages = await client.query('SELECT * FROM packages');
+        const packages = await client.query(
+          'SELECT * FROM packages WHERE _status = $',
+          [status]
+        );
         res.json(packages.rows);
       }
     } catch (error) {
