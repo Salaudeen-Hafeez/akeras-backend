@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { verifyAdminToken } from '../authentication/loginauth';
-import { deleteUser, deletePackage } from '../database/db';
+import { deleteUser, deletePackage, client } from '../database/db';
 
 const deleteRouter = Router();
 
@@ -12,7 +12,10 @@ deleteRouter.delete(
     const userData = [req.params.username, userid];
     try {
       const deletedUser = await deleteUser(userData);
-      res.json(deletedUser.rows);
+      if (deletedUser.rows[0].users_id) {
+        const usersData = await client.query('SELECT * FROM users');
+        res.json(usersData.rows);
+      }
     } catch (error) {
       res.status(400).json({ errMessage: error.message });
     }
