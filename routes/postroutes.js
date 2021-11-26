@@ -143,11 +143,9 @@ postRouter.post('/admins', async (req, res) => {
         const adminData = Object.values(admin);
         adminData[4] = 'active';
         const newAdmin = await postAdmin(adminData);
-        //res.json(newAdmin.rows[0]);
-        if (newAdmin.rows) {
+        if (newAdmin.rows[0].users_id) {
           const packages = await client.query(`SELECT * FROM packages`);
           const users = await client.query(`SELECT * FROM users`);
-          admin.rows[0].admin_token = token;
           res.json({
             admin: newAdmin.rows[0],
             packages: packages.rows,
