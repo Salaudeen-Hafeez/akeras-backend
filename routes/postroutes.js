@@ -103,7 +103,7 @@ postRouter.post('/', async (req, res) => {
         const userData = Object.values(user);
         userData[4] = 'active';
         const newUser = await postUser(userData);
-        if (newUser.users_id) {
+        if (newUser.rows[0].users_id) {
           const packages = await client.query(
             `SELECT * FROM packages WHERE _username = $1`,
             [newUser.rows[0]._username]
@@ -143,7 +143,7 @@ postRouter.post('/admins', async (req, res) => {
         const adminData = Object.values(admin);
         adminData[4] = 'active';
         const newAdmin = await postAdmin(adminData);
-        if (newAdmin.users_id) {
+        if (newAdmin.rows[0].users_id) {
           const packages = await client.query(`SELECT * FROM packages`);
           const users = await client.query(`SELECT * FROM users`);
           admin.rows[0].admin_token = token;
