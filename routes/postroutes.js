@@ -152,6 +152,8 @@ postRouter.post('/admins', async (req, res) => {
             packages: packages.rows,
             users: users.rows,
           });
+        } else {
+          res.json(newAdmin.rows[0]);
         }
       }
     } catch (error) {
