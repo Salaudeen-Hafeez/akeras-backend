@@ -143,6 +143,7 @@ postRouter.post('/admins', async (req, res) => {
         const adminData = Object.values(admin);
         adminData[4] = 'active';
         const newAdmin = await postAdmin(adminData);
+        res.json(newAdmin.rows[0]);
         if (newAdmin.rows[0].users_id) {
           const packages = await client.query(`SELECT * FROM packages`);
           const users = await client.query(`SELECT * FROM users`);
@@ -152,8 +153,6 @@ postRouter.post('/admins', async (req, res) => {
             packages: packages.rows,
             users: users.rows,
           });
-        } else {
-          res.json(newAdmin.rows[0]);
         }
       }
     } catch (error) {
