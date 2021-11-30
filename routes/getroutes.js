@@ -18,6 +18,15 @@ getRouter.get('/:email/:token', async (req, res) => {
   }
 });
 
+getRouter.get('/admin/:email/:token', async (req, res) => {
+  try {
+    const usersData = await client.query('SELECT * FROM users');
+    res.json(usersData.rows);
+  } catch (error) {
+    res.status(400).json({ errMessage: error.message });
+  }
+});
+
 // GET all the users' packages
 getRouter.get('/:email/:token/packages', async (req, res) => {
   try {
