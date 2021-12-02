@@ -62,7 +62,7 @@ const verifyUserToken = (req, res, next) => {
       verify(token, 'jfgdjdgkfgerg');
       next();
     } catch (error) {
-      res.status(400).json({ errMessage: 'Invalid token. kindly login again' });
+      res.status(400).json({ errMessage: 'Invalid token' });
     }
   }
 };
@@ -76,7 +76,7 @@ const verifyAdminToken = (req, res, next) => {
       verify(token, 'jfgdjdgSenditadminkfgerg');
       next();
     } catch (error) {
-      res.status(400).json({ errMessage: 'Invalid token. kindly login again' });
+      res.status(400).json({ errMessage: 'Invalid token' });
     }
   }
 };
@@ -95,7 +95,7 @@ const verifyToken = (req, res, next) => {
         next();
       }
     } catch (error) {
-      res.status(400).json({ errMessage: 'Invalid token. kindly login again' });
+      res.status(400).json({ errMessage: 'Invalid token' });
     }
   }
 };

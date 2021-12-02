@@ -9,7 +9,7 @@ import {
 const getRouter = Router();
 
 // GET all the users
-getRouter.get('/:email/:token', async (req, res) => {
+getRouter.get('/:email/:token', verifyAdminToken, async (req, res) => {
   try {
     const usersData = await client.query('SELECT * FROM users');
     res.json(usersData.rows);
