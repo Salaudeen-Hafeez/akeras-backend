@@ -94,9 +94,7 @@ postRouter.post('/', async (req, res) => {
         [req.body.email, req.body.username]
       );
       if (check.rows[0].exists) {
-        throw new Error(
-          `An account with this email or username already exists`
-        );
+        throw new Error(`Account already exist`);
       } else {
         const user = req.body;
         user.password = hashPass;
