@@ -37,7 +37,7 @@ getRouter.get('/:email/:token/packages', async (req, res) => {
   }
 });
 
-// GET all the new user's packages
+// GET all the new packages users
 getRouter.get(
   '/:email/:token/packages/:condition',
   verifyAdminToken,
