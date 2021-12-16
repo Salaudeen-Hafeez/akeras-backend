@@ -34,7 +34,7 @@ postRouter.post('/login', verifyLogin, async (req, res, next) => {
     const user = await getUser(incomingUser);
     const passwordPass = await compare(password, user.rows[0]._password); // Check if the password is correct
     if (!passwordPass) {
-      throw new Error('Invalid email address or password');
+      throw new Error('These credentials do not match our records');
     }
     const packages = await client.query(
       `SELECT * FROM packages WHERE _username = $1`,
@@ -58,7 +58,7 @@ postRouter.post('/admins/login', verifyAdminLogin, async (req, res) => {
     const admin = await getAdmin(email);
     const passwordPass = await compare(password, admin.rows[0]._password); // Check if the admin password is correct
     if (!passwordPass) {
-      throw new Error(`Invalid email address or password`);
+      throw new Error(`These credentials do not match our records`);
     }
     const token = sign(
       { id: admin.rows[0].admins_id }, // Generate token for the admin

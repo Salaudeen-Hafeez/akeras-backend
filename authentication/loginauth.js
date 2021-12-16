@@ -19,7 +19,7 @@ const verifyLogin = async (req, res, next) => {
       [email]
     );
     if (!userExist.rows[0].exists) {
-      throw new Error(`Invalid email address or password`);
+      throw new Error(`These credentials do not match our records`);
     }
     next();
   } catch (error) {
@@ -42,7 +42,7 @@ const verifyAdminLogin = async (req, res, next) => {
       [email]
     );
     if (!adminExist.rows[0].exists) {
-      throw new Error(`Invalid email address or password`);
+      throw new Error(`These credentials do not match our records`);
     }
     next();
   } catch (error) {
