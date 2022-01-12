@@ -3,8 +3,8 @@ import joi from '@hapi/joi';
 // Validate the new user data
 const userValidation = (data) => {
   const schema = joi.object({
-    name: joi.string().min(6).required(),
-    username: joi.string().required(),
+    name: joi.string().required(),
+    username: joi.required(),
     email: joi.string().required().email(),
     password: joi.string().min(6).required(),
   });
