@@ -27,8 +27,9 @@ updateRouter.put(
   '/:email/:userid/:token/packages/:parcelid',
   verifyToken,
   async (req, res) => {
-    const { email, parcelid: con } = parseInt(req.params);
+    const { email, parcelid } = req.params;
     let packages;
+    const con = parseInt(parcelid);
     const value = Object.values(req.body);
     const key = Object.keys(req.body);
     try {
