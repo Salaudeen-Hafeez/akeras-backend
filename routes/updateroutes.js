@@ -45,7 +45,7 @@ updateRouter.put(
       } else {
         const user = await client.query(
           `SELECT * FROM users WHERE _email = $1`,
-          email
+          [email]
         );
         packages = await client.query(
           `SELECT * FROM packages WHERE _username = $1`,
