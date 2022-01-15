@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { verifyToken } from '../authentication/loginauth';
-import { updateUser, updatePackage } from '../database/db';
+import { updateUser, updatePackage, client } from '../database/db';
 
 const updateRouter = Router();
 
@@ -15,15 +15,6 @@ updateRouter.put('/:email', async (req, res) => {
     } else if (key.length === 2) {
       user = await updateUser(key[0], data[0], con);
       user = await updateUser(key[1], data[1], con);
-    } else if (key.length === 3) {
-      user = await updateUser(key[0], data[0], con);
-      user = await updateUser(key[1], data[1], con);
-      user = await updateUser(key[2], data[2], con);
-    } else if (key.length === 4) {
-      user = await updateUser(key[0], data[0], con);
-      user = await updateUser(key[1], data[1], con);
-      user = await updateUser(key[2], data[2], con);
-      user = await updateUser(key[3], data[3], con);
     }
     res.json(user.rows[0]);
   } catch (error) {
@@ -36,7 +27,8 @@ updateRouter.put(
   '/:email/:userid/:token/packages/:parcelid',
   verifyToken,
   async (req, res) => {
-    const con = parseInt(req.params.parcelid);
+    const { email, parcelid: con } = parseInt(req.params);
+    let packages;
     const value = Object.values(req.body);
     const key = Object.keys(req.body);
     try {
@@ -47,7 +39,20 @@ updateRouter.put(
         parcel = await updatePackage(key[0], value[0], con);
         parcel = await updatePackage(key[1], value[1], con);
       }
-      res.json(parcel.rows[0]);
+      if (email.includes('@sendit.com')) {
+        packages = await client.query(`SELECT * FROM packages`);
+      } else {
+        const user = await client.query(
+          `SELECT * FROM users WHERE _email = $1`,
+          email
+        );
+        packages = await client.query(
+          `SELECT * FROM packages WHERE _username = $1`,
+          [user.rows[0]._username]
+        );
+      }
+
+      res.json({ package: parcel.rows[0], packages: packages.rows });
     } catch (error) {
       res.status(400).json({ errMessage: error.message });
     }
