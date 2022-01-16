@@ -30,13 +30,14 @@ deleteRouter.delete(
     const status = req.params.status;
     try {
       const deletedParcel = await deletePackage(parcelCon);
-      if (deletedParcel.rows[0].parcel_id) {
-        const packages = await client.query(
-          'SELECT * FROM packages WHERE _status = $1',
-          [status]
-        );
-        res.json(packages.rows);
-      }
+      res.json(deletedParcel.rows);
+      // if (deletedParcel.rows[0].parcel_id) {
+      //   const packages = await client.query(
+      //     'SELECT * FROM packages WHERE _status = $1',
+      //     [status]
+      //   );
+      //   res.json(packages.rows);
+      // }
     } catch (error) {
       res.status(400).json({ errMessage: error.message });
     }
