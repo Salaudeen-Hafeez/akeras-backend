@@ -178,7 +178,7 @@ postRouter.post(
         packageData.push('Ready for pickup');
         const newPackage = await postPackage(packageData);
         if (newPackage.rowCount === 1) {
-          const userPackage = client.query(
+          const userPackage = await client.query(
             'SELECT * FROM packages WHERE _username = $1',
             [username]
           );
