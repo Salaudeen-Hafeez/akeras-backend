@@ -164,6 +164,7 @@ postRouter.post(
   '/:username/:email/:token/packages',
   verifyUserToken,
   async (req, res) => {
+    const { username } = req.params;
     const reqBody = req.body;
     if (reqBody.frajile === '') {
       reqBody['frajile'] = 'package not frajile';
@@ -176,7 +177,13 @@ postRouter.post(
         const packageData = Object.values(req.body);
         packageData.push('Ready for pickup');
         const newPackage = await postPackage(packageData);
-        res.json(newPackage);
+        if (newPackage.rowCount === 1) {
+          const userPackage = client.query(
+            'SELECT * FROM packages WHERE _username = $1',
+            [username]
+          );
+          res.json((await userPackage).rows);
+        }
       } catch (error) {
         res.status(400).json({ errMessage: error.message });
       }
