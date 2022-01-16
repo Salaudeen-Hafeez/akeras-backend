@@ -182,7 +182,7 @@ postRouter.post(
             'SELECT * FROM packages WHERE _username = $1',
             [username]
           );
-          res.json((await userPackage).rows);
+          res.json({ packages: userPackage.rows, package: newPackage.rows[0] });
         }
       } catch (error) {
         res.status(400).json({ errMessage: error.message });
