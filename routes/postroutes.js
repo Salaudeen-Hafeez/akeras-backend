@@ -174,9 +174,9 @@ postRouter.post(
     } else {
       try {
         const packageData = Object.values(req.body);
-        packageData.push('At the location');
+        packageData.push('Ready for pickup');
         const newPackage = await postPackage(packageData);
-        res.json(newPackage.rows[0]);
+        res.json(newPackage);
       } catch (error) {
         res.status(400).json({ errMessage: error.message });
       }
