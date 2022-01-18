@@ -25,5 +25,6 @@ CREATE TABLE packages(
     _sender VARCHAR(60) NOT NULL,
     _reciever VARCHAR(60) NOT NULL,
     _frajile VARCHAR(60) NOT NULL,
-    _status VARCHAR(30) NOT NULL
+    _status VARCHAR(60) NOT NULL,
+    _cost VARCHAR(60) NOT NULL
 );

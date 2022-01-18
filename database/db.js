@@ -89,10 +89,11 @@ const postPackage = (packageData) => {
         _reciever,
         _frajile,
         _username,
+        _cost
         _status
         ) VALUES (
           $1, $2, $3, $4,
-          $5, $6, $7, $8
+          $5, $6, $7, $8, $9
           ) RETURNING *`,
     packageData
   );
