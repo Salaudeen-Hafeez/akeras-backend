@@ -89,7 +89,7 @@ const postPackage = (packageData) => {
         _reciever,
         _frajile,
         _username,
-        _cost
+        _cost,
         _status
         ) VALUES (
           $1, $2, $3, $4,
