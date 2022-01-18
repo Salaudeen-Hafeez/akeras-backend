@@ -176,6 +176,7 @@ postRouter.post(
       try {
         const packageData = Object.values(req.body);
         packageData.push('Ready for pickup');
+        res.json({ package: packageData });
         const newPackage = await postPackage(packageData);
         if (newPackage.rowCount === 1) {
           const userPackage = await client.query(
