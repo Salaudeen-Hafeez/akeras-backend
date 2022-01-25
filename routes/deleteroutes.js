@@ -14,7 +14,7 @@ deleteRouter.delete(
       const deletedUser = await deleteUser(userData);
       if (deletedUser.rows[0].users_id) {
         const usersData = await client.query('SELECT * FROM users');
-        res.json(usersData.rows);
+        res.json({ users: usersData.rows });
       }
     } catch (error) {
       res.status(400).json({ errMessage: error.message });
