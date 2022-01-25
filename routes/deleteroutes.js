@@ -32,7 +32,7 @@ deleteRouter.delete(
       const deletedParcel = await deletePackage(parcelCon);
       if (deletedParcel.rowCount !== 0) {
         const packages = await client.query('SELECT * FROM packages');
-        res.json(packages.rows);
+        res.json({ packages: packages.rows, package: deletedParcel });
       }
     } catch (error) {
       res.status(400).json({ errMessage: error.message });
