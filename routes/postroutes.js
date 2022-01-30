@@ -94,7 +94,7 @@ postRouter.post('/', async (req, res) => {
         [req.body.email, req.body.username]
       );
       if (check.rows[0].exists) {
-        throw new Error(`Account exist`);
+        throw new Error('Account exist');
       } else {
         const user = req.body;
         user.password = hashPass;
@@ -132,9 +132,7 @@ postRouter.post('/admins', async (req, res) => {
         [req.body.email, req.body.username]
       );
       if (check.rows[0].exists) {
-        throw new Error(
-          `Admin with ${req.body.email} or ${req.body.username} exist`
-        );
+        throw new Error('Account exist');
       } else {
         const admin = req.body;
         admin.password = hashPass;
